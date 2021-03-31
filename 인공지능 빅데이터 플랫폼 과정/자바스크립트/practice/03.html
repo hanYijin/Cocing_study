@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //혹시 이거 더 쉽게 짜는 방법 있나요~?
+        let counter = Number(prompt('별 찍는 횟수', ''));
+        let star = '';
+        if (counter == 1) {
+            alert('*');
+        } else {
+            let switch_star = 0;
+            for (let i = 0; i < counter * 2; i++) {
+                for (let j = 0; j < counter; j++) {
+                    if (switch_star % 2 == 0) {
+                        star += '*';
+                    } else {
+                        star += ' ' //'&nbsp;'; // ' '
+                    }
+                    switch_star++;
+                }
+                if (counter % 2 == 0) {
+                    switch_star++;
+                }
+                star += "\n"//"<br>";
+            }
+             console.log(star);
+            //document.write(star);
+        }
+    </script>
+</body>
+
+</html>
