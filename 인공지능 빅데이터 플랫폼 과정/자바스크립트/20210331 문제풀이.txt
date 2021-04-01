@@ -1,4 +1,4 @@
-1.
+for1.
   <script>
         const array=[]
         for(let i=0; i<5;i++)
@@ -20,23 +20,147 @@
         alert(array)
     </script>
 -----------------------------------------------------------
-  <script>
-        let input = []
-        for(let i = 0; i < 5; i++)
-            input[i] = prompt( (Number(i)+1)+"번째 값은?")
-        
-        console.log(input)
-        let min = Number(input[0])
-        let max = Number(input[0])
+          let input=[] // 배열이 유동적으로 늘어남으로 빈칸 초기화
+       for(let i =0; i<5;i++)
+       {
+           input[i]= Number(prompt((Number(i)+1)+"번째 값은?"))
+            //Number로 감싸 숫자로 형변환! prompt는 문자열로 값을 저장
+       } 
+       alert(input)
+       //위에 prompt를 Number로 감싸지 않을 때는 각 각 감싸서 형변환
+       let min=Number(input[0]) 
+       let max=Number(input[0])
 
-        for(let i = 0; i < input.length; i++)
-        {
-            if(min > input[i])
-                min = input[i]
-            if(max < input[i])
-                max = input[i]
-        }
-        alert(`최솟값 : ${min}`)
-        alert(`최댓값 : ${max}`)
+       for(let i=0; i<input.length;i++ )
+       {
+            if(min>input[i])
+                min=input[i]
+            if(max<input[i])
+                max=input[i]
+           
+       }
+       alert(`최소값: ${min}`)
+       alert(`최댓값: ${max}`)
     </script>
 ________________________________________________________________
+2. 개미수열 (읽고 말하기 수열)
+1
+11
+12
+1121
+122111
+112213
+... 
+ //charAt()이해하기
+
+ let ex="hyj"
+ let one=ex.charAt(0)
+ let two=ex.charAt(1)
+ let three=ex.charAt(2)
+ console.log(ex)
+ console.log(one)
+ console.log(two)
+ console.log(three)
+
+---------------------------------------------------------------
+ let start="1"
+ for(let i=0;i<20;i++)
+ {
+     console.log((Number(i)+1)+"번 째: "+ start)
+     let end=''//누적 변수
+     let num=start.charAt(0)//읽을 숫자
+     let count=0//읽을 숫자의 개수
+     for(let j=0; j<start.length;j++)
+     {
+         if(num != start.charAt(j))
+         {
+            end=end+num+count
+            count=1
+            num=start.charAt(j)
+         }
+         else
+            count++
+     }
+     end= end+num+count;
+     start=end;
+ }
+
+3. 
+    <script>
+        let counter=Number(prompt('별 찍는 횟수'))
+        let star=''
+        if(counter==1)
+            alert('*')
+        else
+        {
+            let switch_star=0; //공백이 먼저 인지 '*'이 먼저 출력할지 (플래그 변수)
+            for(let i=0; i<counter*2;i++)//입력받은 수의 2배 길이 만크 출력
+            {
+                for(let j=0;j<counter; j++)
+                {
+                    if(switch_star%2==0)
+                        star+='*'
+                    else
+                        star+=' '
+                    switch_star++;
+                }
+                if(counter%2==0) //짝수 
+                    switch_star++
+                star+='\n'
+            }
+            alert(star)
+        }
+    </script>
+_______________________________________________________________________________________________
+4.
+let output=''
+for(let i=1; i<15;i++)
+{
+    // 공백 출력
+    for(let j=15; j>i;j--)
+        output+=' '
+    // * 출력
+    for(let k=0;k<2*i-1; k++) //i가 1일때 2*1-1= '*'이 1
+        output+='*'           //i가 2일때 2*2-1= '*'이 3...
+                
+    output += '\n'
+}
+console.log(output)
+
+
+              *
+             ***
+            *****
+           *******
+          *********
+         ***********
+        *************
+       ***************
+      *****************
+     *******************
+    *********************
+   ***********************
+  *************************
+ ***************************
+___________________________________________________
+5. 다이아몬드
+let output=''
+const size = 5
+
+for(let i=1; i<=5;i++)//삼각형
+{
+    for(let j=size;j>i;j--)
+        output+=' '//공백
+    for(let k=0;k<2*1-1;k++)
+        output+='*'
+    output+='\n'
+}
+for(let i= size-1;i>0;i--)//역삼각형
+{
+    for(let j=size;j>i;j--)
+        output+=' '//공백
+    for(let k=0;k<2*1-1;k++)
+        output+='*'
+    output+='\n'
+}
+console.log(output)

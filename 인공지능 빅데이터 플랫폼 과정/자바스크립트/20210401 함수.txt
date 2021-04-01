@@ -1,0 +1,350 @@
+<body>
+    <div>
+        <input type="text" name="숫자1" id="s1">
+        <input type="text" name="숫자2" id="s2">
+        <span id="r1">덧셈 결과</span>
+        <div>
+            <input type="button" value="+" onclick="sum()">
+        </div>
+    </div>
+    <div>
+        <input type="text" name="숫자1" id="m1">
+        <input type="text" name="숫자2" id="m2">
+        <span id="r2">뺄셈 결과</span>
+        <div>
+            <input type="button" value="-" onclick="min()">
+        </div>
+    </div>
+    <div>
+        <input type="text" name="숫자1" id="mul1">
+        <input type="text" name="숫자2" id="mul2">
+        <span id="r3">곱셈 결과</span>
+        <div>
+            <input type="button" value="*" onclick="mul()">
+        </div>
+    </div>
+    <div>
+        <input type="text" name="숫자1" id="d1">
+        <input type="text" name="숫자2" id="d2">
+        <span id="r4">나눗셈 결과</span>
+        <div>
+            <input type="button" value="/" onclick="div()">
+        </div>
+    </div>
+    <script>
+        function sum()
+        {
+            let n1= document.getElementById('s1').value
+            let n2= document.getElementById('s2').value
+            let sum= Number(n1)+Number(n2)
+            alert(sum)
+            document.getElementById('r1').innerText=sum
+        }
+        function min()
+        {
+            let n1= document.getElementById('m1').value
+            let n2= document.getElementById('m2').value
+            let min= Number(n1) - Number(n2)
+            alert(min)
+            document.getElementById('r2').innerText=min
+        }
+        function mul()
+        {
+            let n1= document.getElementById('mul1').value
+            let n2= document.getElementById('mul2').value
+            let mul= Number(n1)*Number(n2)
+            alert(mul)
+            document.getElementById('r3').innerText=mul
+        }
+        function div()
+        {
+            let n1= document.getElementById('d1').value
+            let n2= document.getElementById('d2').value
+            let div= Number(n1)/Number(n2)
+            alert(div)
+            document.getElementById('r4').innerText=div
+        }
+        
+    </script>
+</body>
+________________________________________________________________________________
+<body>
+    <input type="text" name="" id="n1">
+    <input type="text" name="" id="n2">
+    <span id="result">결과</span>
+    <div>
+        <input type="button" value="+" onclick="calc('+')">
+        <input type="button" value="-" onclick="calc('-')">
+        <input type="button" value="*" onclick="calc('*')">
+        <input type="button" value="/" onclick="calc('/')">
+    </div>
+    <script>
+        function calc(num)
+        {
+            let one=document.getElementById('n1').value
+            let two=document.getElementById('n2').value
+            let result=''
+            switch(num)
+            {
+                case '+':
+                    result= Number(one) + Number(two)
+                    break;
+                case '-':
+                    result=Number(one)- Number(two)
+                    break
+                case '*':
+                    result=Number(one)*Number(two)
+                    break
+                case '/':
+                    result=Number(one)/Number(two)
+                    break
+                default:
+                    alert("!?")
+                    result="!?"
+                    break
+            }
+            document.getElementById('result').innerText=result
+        }
+        
+    </script>
+</body>
+_____________________________________________________________________________
+const func= function()
+{
+    console.log("hello1")
+    console.log("hello2")
+}
+func()
+
+function func2()
+{
+    console.log("hello3")
+}
+func2()
+
+hello1
+hello2
+hello3
+
+function func3(param)
+{
+    console.log(param)
+}
+func3([1,2,3,4])
+func3("1234")
+func3(1234)
+[ 1, 2, 3, 4 ]
+1234
+1234
+
+//매개변수 받고, 리턴값 주는 것 가능
+function f(x)
+{
+    return x*x
+}
+console.log(f(10))
+
+100
+
+________________________________________________________________
+function min(array)
+{
+    let output = array[0]
+    for(const item of array)
+    {
+        if(output>item)//item이 더 작다면
+            output=item
+    }
+    return output
+}
+function max(arr)
+{
+    let max =arr[0]
+    for(const i of arr)
+    {
+        if(max<i)
+            max=i
+    }
+    return max
+}
+const testArray=[52,273,32,103,275,24,57]
+console.log(`${testArray}중에서`)
+console.log(`최솟값 ${min(testArray)}`)
+console.log(`최댓값 ${max(testArray)}`)
+
+52,273,32,103,275,24,57중에서
+최솟값 24
+최댓값 275
+
+______________________________________________
+function sample(...items)
+{
+    console.log(items)
+}
+sample(1)
+sample(1,2)
+sample(1,2,3)
+sample(1,2,3,4)
+
+[ 1 ]
+[ 1, 2 ]
+[ 1, 2, 3 ]
+[ 1, 2, 3, 4 ]
+
+function sample2(a,b,...items)
+{
+    console.log(a,b,items)
+}
+sample2(1)       	//1 undefined []
+sample2(1,2)    	//2 []
+sample2(1,2,3) 	 // 1 2 [3]
+sample2(1,2,3,4)  	// 1 2 [3,4] 
+
+1 undefined []
+1 2 []
+1 2 [ 3 ]
+1 2 [ 3, 4 ]
+-------------------------------------------------------------
+function sample()
+{
+    console.log(arguments)
+    
+}
+//arguments ...대신 사용한 가변 매개변수
+sample(1)
+sample(1,2)
+sample(1,2,3)
+sample(1,2,3,4)
+
+[Arguments] { '0': 1 }
+[Arguments] { '0': 1, '1': 2 }
+[Arguments] { '0': 1, '1': 2, '2': 3 }
+[Arguments] { '0': 1, '1': 2, '2': 3, '3': 4 }
+______________________________________________
+function sample()
+{
+    console.log(arguments)
+    for(let i=0;i<arguments.length;i++){
+        console.log(`${arguments[i]}`)
+    }
+    
+}
+//arguments ...대신 사용한 가변 매개변수
+sample(1)
+sample(1,2)
+sample(1,2,3)
+sample(1,2,3,4)
+
+[Arguments] { '0': 1 }
+1
+[Arguments] { '0': 1, '1': 2 }
+1
+2
+[Arguments] { '0': 1, '1': 2, '2': 3 }
+1
+2
+3
+[Arguments] { '0': 1, '1': 2, '2': 3, '3': 4 }
+1
+2
+3
+______________________________________________________
+function master(name='한이진')
+{
+    console.log("hello "+name+'님')
+}
+master() // 기본 매개변수 값인 '한이진'을 사용
+master("제니")
+master("로제")
+
+hello 한이진님
+hello 제니님
+hello 로제님
+------------------------------------------------------
+function master(name='한이진', age=26)
+{
+    console.log("hello "+name+'님')
+    console.log('당신의 나이는 '+age+'세 입니다.')
+}
+master()
+master("제니")
+master("로제", 25)
+
+hello 한이진님
+당신의 나이는 26세 입니다.
+hello 제니님
+당신의 나이는 26세 입니다.
+hello 로제님
+당신의 나이는 25세 입니다.
+-------------------------------------------------------------
+function master(name, age)
+{
+    name= typeof(name) == undefined? name:'한이진'
+    age= typeof(age) == undefined? age:26
+
+    console.log("hello "+name+'님')
+    console.log('당신의 나이는 '+age+'세 입니다.')
+}
+master()
+master("제니")
+master("로제", 25)
+
+hello 한이진님
+당신의 나이는 26세 입니다.
+hello 한이진님
+당신의 나이는 26세 입니다.
+hello 한이진님
+당신의 나이는 26세 입니다.
+----------------------------------------------------------
+function master(name, age)
+{
+    // name= typeof(name) == undefined? name:'한이진'
+    // age= typeof(age) == undefined? age:26
+    name= name || '한이진'
+    age= age || 26
+
+    console.log("hello "+name+'님')
+    console.log('당신의 나이는 '+age+'세 입니다.')
+}
+master()
+master("제니")
+master("로제", 25)
+
+hello 한이진님
+당신의 나이는 26세 입니다.
+hello 제니님
+당신의 나이는 26세 입니다.
+hello 로제님
+당신의 나이는 25세 입니다.
+__________________________________________________________
+function callThreeTime(callback)
+{
+    for(let i=0; i<3;i++)
+    {
+        callback(i)
+    }
+}
+function print(i)
+{
+    console.log(`${i}번쨰 함수 호출`)
+}
+callThreeTime(print) // 함수 명을 넣은 것
+
+0번쨰 함수 호출
+1번쨰 함수 호출
+2번쨰 함수 호출
+
+----------------------------------------------------------------
+
+callThreeTime//매개변수에 함수를 통째로 그대로 넣은것 
+(
+    function(i)
+    {
+        console.log(`${i}번째 함수 호출`)
+    }
+)
+0번째 함수 호출
+1번째 함수 호출
+2번째 함수 호출
+
+
