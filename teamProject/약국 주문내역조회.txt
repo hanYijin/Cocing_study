@@ -1,0 +1,64 @@
+package teamProject;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import teamProject.DBConnec;
+//import teamProject.DBCustomertable.CUSTOMER;
+
+class BUYING {
+   private int cid;
+   private String cname;
+   private String pid;
+   private String orderdate;
+   private int price;
+   private int count;
+   // 1 setter...
+   // 2 생성자로...
+   public BUYING(int cid, String cname, String pid, String orderdate,int price, int count){
+      this.cid = cid;
+      this.cname = cname;
+      this.pid = pid;
+      this.orderdate = orderdate;
+      this.price = price;
+      this.count = count;
+   }
+   public void print() {
+      System.out.println();
+   }
+}
+public class DBSelectOrderlist {
+   
+   public static void dbo() {
+      Connection conn = null;
+        PreparedStatement pstm = null; 
+        ResultSet rs = null; 
+      try {   
+         int count =0;
+         BUYING[] cus = new BUYING[1000];
+         conn = DBConnec.getConnection();
+          String quary = "SELECT * FROM buying";
+               
+            pstm = conn.prepareStatement(quary);
+            rs = pstm.executeQuery();
+         
+            int temp =0;
+            while (rs.next()) {
+              
+               cus[temp] = new BUYING(rs.getInt("CID"),rs.getString("CNAME"),rs.getString("PID"),rs.getString("ORDERDATE"),rs.getInt("PRICE"),rs.getInt("COUNT"));
+               cus[temp].print();
+               temp++;
+            }
+
+          
+          rs.close();
+
+          conn.close();
+          } catch(Exception e){
+          e.printStackTrace();
+          }
+      
+}
+}
