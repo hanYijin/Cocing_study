@@ -1,0 +1,74 @@
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.util.Vector;
+
+public class Ex01 extends JFrame {
+	JPanel center_panel = new JPanel();
+	JPanel bottom_panel = new JPanel();
+	JButton btn_select= new JButton("조회");
+	
+	JTable jt = new JTable();
+	JScrollPane jp= new JScrollPane();
+	
+	Vector data = new Vector<Vector>();
+	Vector title= new Vector<String>();
+	
+
+	
+	public Ex01(){
+		center_panel.setBackground(Color.PINK);
+		bottom_panel.setBackground(Color.CYAN);
+		
+		title.add("1번");
+		title.add("2번");
+		title.add("3번");
+		title.add("4번");
+		
+		Vector<String> data1= new Vector<String>();
+		
+		data1.add("내용1");
+		data1.add("내용1");
+		data1.add("내용1");
+		data1.add("내용1");
+	Vector<String> data2= new Vector<String>();
+		
+		data2.add("내용2");
+		data2.add("내용2");
+		data2.add("내용2");
+		data2.add("내용2");
+		
+		data.add(data1);
+		data.add(data2);
+		
+		jt= new JTable(data,title);
+		
+		//스크롤 패널위에 테이블추가
+		jp.add(jt);
+		jp.setPreferredSize(new Dimension(800,550));
+		//중간 패널에 스크롤 패널 추가
+		center_panel.add(jp);
+		// 아래 패널에 버튼추가
+		bottom_panel.add(btn_select);
+		
+		getContentPane().add(center_panel, BorderLayout.CENTER);
+		getContentPane().add(bottom_panel, BorderLayout.SOUTH);
+		
+		
+		setSize(800,600);
+		setVisible(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+
+	}
+	public static void main(String[] args) {
+		new Ex01();
+	}
+
+}
