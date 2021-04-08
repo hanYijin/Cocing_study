@@ -1,0 +1,697 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ClassTest1
+{
+    class Car
+    {//c#은 명시하지 않으면 자동으로 private! 
+        //java는 public
+        private string model;
+        private string color;
+        private string company;
+        private string price;
+        
+        
+        //geter, seter 메소드 생성 {람다식}
+        
+        //public string Model { get => model; set => model = value; }
+        public void setModel(string model)
+        {
+            this.model = model;
+        }
+        public string getModel()
+        {
+            return model;
+        }
+        public string Color { get => color; set => color = value; }
+        public string Company { get => company; set => company = value; }
+        public string Price { get => price; set => price = value; }
+    }
+}
+
+___________________________________________________________________________________________________________________________________
+캡슐화 되지 않은 클래스의 접근 방법
+namespace ClassTest1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            new Car();// 객체 생성 (힙영역에 할당)
+            Car car = new Car();
+            //클래스 변수 생성(스택영역)인스던스(클래스)를 참조 | 객체 생성(인스턴스 생성, 힙영역)참조값을 반환하여 변수에 저장
+            //java, c#의 인스턴스는 가비지 컬력션이 메모리 관리
+            car.model = "k8";
+            // 객체지향에 위배=> 캡슐화(정보은닉)이 이루어지지 않음, 생성자를 통한 set! 또는 메소드를 통한 set이 되어야 함
+        }
+    }
+}
+___________________________________________________________________________________________________________________________________________
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ClassTest1
+{
+    class Car
+    {//c#은 명시하지 않으면 자동으로 private! 
+        //java는 public
+        private string model;
+        private string color;
+        private string company;
+        private string price;
+        
+        
+        //geter, seter 메소드 생성 {람다식}
+        
+        //public string Model { get => model; set => model = value; }
+        public void setModel(string model)
+        {
+            this.model = model;
+        }
+        public string getModel()
+        {
+            return model;
+        }
+        public string Color { get => color; set => color = value; }
+        public string Company { get => company; set => company = value; }
+        public string Price { get => price; set => price = value; }
+    }
+}
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ClassTest1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            new Car().Color = "검정";// seter 메소드를 호출 
+            Car car = new Car();
+            car.setModel("그랜저");//java식
+            car.Color = "회색";//C# 자동 setter
+            Console.WriteLine("모델:{0}, 색상: {1}",car.getModel(), car.Color);
+      
+        }
+    }
+}
+모델:그랜저, 색상: 회색
+________________________________________________________________________________________
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ClassTest1
+{
+    // 모든 클래스의 최상위 클래스는 object
+    class Car 
+    {//c#은 명시하지 않으면 자동으로 private! 
+        //java는 public
+        private string model;
+        private string color;
+        private string company;
+        private string price;
+
+        public Car() //default 생성자, 객체를 생성시 호출
+        {
+        }
+
+        public Car(string model, string color, string company, string price)//매배변수를 갖는 생성자 오버라이딩 한것이다
+        {
+            this.model = model;
+            this.color = color;
+            this.company = company;
+            this.price = price;
+        }
+
+        //geter, seter 메소드 생성 {람다식}
+        public string Model { get => model; set => model = value; }
+        public string Color { get => color; set => color = value; }
+        public string Company { get => company; set => company = value; }
+        public string Price { get => price; set => price = value; }
+
+        public void printInfoCar()
+        {
+            Console.WriteLine("모델: " + model);
+            Console.WriteLine("제조사: " + company);
+            Console.WriteLine("색상: " + color);
+            Console.WriteLine("가격: " + price);
+            Console.WriteLine("____________________");
+        }
+    }
+}
+
+namespace ClassTest1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Car car = new Car("k8","gray","KIA","5천만원");
+            car.Model="그랜저";//모델이 그랜저로 변경
+            Console.WriteLine("모델:{0}, 색상: {1}",car.Model, car.Color);
+            car.printInfoCar();
+            
+            Car car2= new Car();
+            car2.Model = "아이오닉";
+            car2.printInfoCar();
+      
+        }
+    }
+}
+모델:그랜저, 색상: gray
+모델: 그랜저
+제조사: KIA
+색상: gray
+가격: 5천만원
+____________________
+모델: 아이오닉
+제조사:
+색상:
+가격:
+____________________
+
+_______________________________________________________________________________________
+namespace ClassTest1
+{
+    // 모든 클래스의 최상위 클래스는 object
+    class Car 
+    {
+ //static 클래스변수
+        const string JIJUM = "동대구영업소"; //상수 변수 선언과 초기화, 공통 사용	
+//c#은 명시하지 않으면 자동으로 private! 
+        //java는 public
+        private string model;
+        private string color;
+        private string company;
+        private string price;
+
+        public Car() //default 생성자, 객체를 생성시 호출
+        {
+        }
+
+        public Car(string model, string color, string company, string price)//매배변수를 갖는 생성자 오버라이딩 한것이다
+        {
+            this.model = model;
+            this.color = color;
+            this.company = company;
+            this.price = price;
+        }
+
+        //geter, seter 메소드 생성 {람다식}
+        public string Model { get => model; set => model = value; }
+        public string Color { get => color; set => color = value; }
+        public string Company { get => company; set => company = value; }
+        public string Price { get => price; set => price = value; }
+
+        public void printInfoCar()
+        {
+            Console.WriteLine("모델: " + model);
+            Console.WriteLine("제조사: " + company);
+            Console.WriteLine("색상: " + color);
+            Console.WriteLine("가격: " + price);
+            Console.WriteLine("____________________");
+        }
+        //오버라이딩: object의 메소드 재정의
+        public override string ToString()
+        {
+            string str= "모델: "+model+"\n"+"제조사: "+company+"\n"+"색상: "+color+"\n"+"가격: "+price+"\n";
+            return str;
+        }
+    }
+
+namespace ClassTest1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Car car = new Car("k8","gray","KIA","5천만원");
+            car.Model="그랜저";//모델이 그랜저로 변경
+            car.printInfoCar();
+            
+            Car car2= new Car();
+            car2.Model = "아이오닉";
+            car2.printInfoCar();
+
+           Console.WriteLine( new Car("G80", "블루", "현대", "7천만원").ToString());      
+        }
+    }
+
+모델: 그랜저
+제조사: KIA
+색상: gray
+가격: 5천만원
+____________________
+모델: 아이오닉
+제조사:
+색상:
+가격:
+____________________
+모델: G80
+제조사: 현대
+색상: 블루
+가격: 7천만원
+_______________________________________________________________________________________________________
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ClassTest1
+{
+    class Student
+    {
+        public const string SCHCOOL = "대구초등";       
+        private string name;
+        private int age;
+        private char gender;
+        private string tel;
+        private string addr;
+        //생성자
+        public Student()
+        {
+        }
+        //매개변수 받는 생성자
+        public Student(string name, int age, char gender, string tel, string addr)
+        {
+            this.name = name;
+            this.age = age;
+            this.gender = gender;
+            this.tel = tel;
+            this.addr = addr;
+        }
+        //getter, setter 자동생성
+        public string Name { get => name; set => name = value; }
+        public int Age { get => age; set => age = value; }
+        public char Gender { get => gender; set => gender = value; }
+        public string Tel { get => tel; set => tel = value; }
+        public string Addr { get => addr; set => addr = value; }
+        
+        //오버라이딩
+        public override string ToString()
+        {
+            return base.ToString();
+        }
+
+        //인스턴스 메소드 추가
+        public void studentInfo()
+        {
+            Console.WriteLine("name: " + name);
+            Console.WriteLine("age: " + age);
+            Console.WriteLine("gender: " + gender);
+            Console.WriteLine("tel: " + tel);
+            Console.WriteLine("address: " + addr);
+            Console.WriteLine("____________________");
+        }
+    }
+
+
+
+}
+namespace ClassTest1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Random r = new Random();//랜덤 클래스 생성
+            string[] name = { "hong", "kim", "park", "cho", "han" };
+            int[] age = { 30, 40, 50, 60, 100 };
+            char[] gender = { '남', '여' ,'남','여','여'};
+            string[] tel = { "010-222-3333", "010-223-39393", "393842899", "39393939", "49494939" };
+            string[] addr = { "서울", "대구 동구", "대구 북구", "부산", "울산" };
+
+            //0~2의 랜덤
+            Console.WriteLine(r.Next(3));
+            Student[] st = new Student[10];//10명의 학생 인스턴스 배열
+            for(int i=0;i<name.Length;i++)
+            {
+                st[i] = new Student(name[i], age[i], gender[i], tel[i], addr[i]);
+            }
+            st[0] = new Student(name[0], age[0], gender[0], tel[0], addr[0]);
+
+            int n = r.Next(5);
+            st[n].studentInfo();
+            st[r.Next(5)].studentInfo();
+
+        }
+    }
+}
+
+2
+name: kim
+age: 40
+gender: 여
+tel: 010-223-39393
+address: 대구 동구
+____________________
+name: cho
+age: 60
+gender: 여
+tel: 39393939
+address: 부산
+____________________
+
+--------------------------------------------------------------------------------
+static void Main(string[] args)
+        {
+            Random r = new Random();//랜덤 클래스 생성
+            string[] name = { "hong", "kim", "park", "cho", "han" };
+            int[] age = { 30, 40, 50, 60, 100 };
+            char[] gender = { '남', '여'};
+            string[] tel = { "010-222-3333", "010-223-39393", "393842899", "39393939", "49494939" };
+            string[] addr = { "서울", "대구 동구", "대구 북구", "부산", "울산" };
+            //슨생님
+            Student[] st = new Student[10];
+            List<Student> stu = new List<Student>();
+            for(int i=0; i<st.Length;i++)
+            {
+                st[i] = new Student(name[r.Next(5)], age[r.Next(5)], gender[r.Next(2)], tel[r.Next(5)], addr[r.Next(5)]);
+                st[i].studentInfo();
+                stu.Add(new Student(name[r.Next(5)], age[r.Next(5)], gender[r.Next(2)], tel[r.Next(5)], addr[r.Next(5)]));
+                stu[i].studentInfo();
+            }
+            
+        }
+_____________________________________________________________________________________________________________________________
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ClassTest1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+           menuMain();            
+        }
+        public static Student setStudent()
+        {
+            Console.WriteLine("name: ");
+            string name = Console.ReadLine();
+            Console.WriteLine("age: ");
+            int age = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("gender: ");
+            char gender =Convert.ToChar(Console.ReadLine());
+            Console.WriteLine("tel: ");
+            string tel = Console.ReadLine();
+            Console.WriteLine("address: ");
+            string addr = Console.ReadLine();
+            Student stu = new Student(name,age,gender,tel,addr);
+
+            return stu;
+        }
+        public static void menuMain()
+        {
+            List<Student> stu = new List<Student>();
+            Console.WriteLine("------------------------------------------");
+            Console.WriteLine("학생 관리 프로그램 v1.0");
+            Console.WriteLine("------------------------------------------");
+            while (true)
+            {
+                Console.WriteLine("1. 학생정보 생성");
+                Console.WriteLine("2. 학생정보 출력");
+                Console.WriteLine("3. 종료");
+                Console.WriteLine("------------------------------------------");
+                int select = Convert.ToInt32(Console.ReadLine());
+                int i = 0;
+           
+                switch (select)
+                {
+                    case 1:
+                        //Console.WriteLine(i + "번째 학생 생성");
+                        stu.Add(setStudent());                
+                        break;
+                    case 2:
+                        Console.WriteLine("몇번째 학생: ");
+                        int n = Convert.ToInt32(Console.ReadLine());
+                        stu[n].studentInfo();
+                        break;
+
+                    case 3:
+                        Environment.Exit(0);//프로그램 종료
+                        break;
+                }
+                i++;
+            }
+
+        }
+  
+    }
+}
+-----------------------------------------------------------------------------------------------
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ClassTest1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            const int MAIN_MENU_INSERT = 1;
+            const int MAIN_MENU_VIEW = 2;
+            const int MAIN_MENU_EXIT = 3;
+
+            Random r = new Random();//랜덤 클래스 생성
+
+            string[] name = { "hong", "kim", "park", "cho", "han" };
+            int[] age = { 30, 40, 50, 60, 100 };
+            char[] gender = { '남', '여' };
+            string[] tel = { "010-222-3333", "010-223-39393", "393842899", "39393939", "49494939" };
+            string[] addr = { "서울", "대구 동구", "대구 북구", "부산", "울산" };
+            
+            Student[] st = new Student[10];
+            // List<Student> stu = new List<Student>();
+          
+            while (true)
+            {
+                switch(menuMain())
+                {
+                    case MAIN_MENU_INSERT:
+                        Console.WriteLine("랜덤 데이터 생성");
+                        createRandData(st, name, age, gender, tel, addr, r);
+                        break;
+                     case MAIN_MENU_VIEW:
+                        dataView(st);                     
+                        break;
+                    case MAIN_MENU_EXIT:
+                        Environment.Exit(0);
+                        break;
+                }
+                
+
+            }
+        }
+        public static int menuMain()
+        {
+            List<Student> stu = new List<Student>();
+            Console.WriteLine("------------------------------------------");
+            Console.WriteLine("학생 관리 프로그램 v1.0");
+            Console.WriteLine("------------------------------------------");
+            Console.WriteLine("1. 학생정보 생성");
+            Console.WriteLine("2. 학생정보 출력");
+            Console.WriteLine("3. 종료");
+            Console.WriteLine("------------------------------------------");
+            Console.WriteLine("선택: ");
+            int menu = Convert.ToInt32(Console.ReadLine());
+            return menu;
+        }
+        //학생 랜덤 데이터 생성
+        public static void createRandData(Student[] st, string[] name, int[] age, char[]gender, string[] tel, string[] addr, Random r)
+        {
+            for (int i = 0; i < st.Length; i++)
+            {
+                st[i] = new Student(name[r.Next(5)], age[r.Next(5)], gender[r.Next(2)], tel[r.Next(5)], addr[r.Next(5)]);
+            }
+        }
+        //출력 메소드
+        public static void dataView (Student[] s)
+        {
+            for(int i=0; i < s.Length; i++)
+            {
+                try { 
+                    s[i].studentInfo(); 
+                }catch(NullReferenceException e)
+                {
+                    e.ToString();
+                    Console.WriteLine("데이터 생성을 실패하였습니다.");
+                    Console.WriteLine(e.Message);
+                }
+                
+            }
+        }
+  
+    }
+}
+선택:
+2
+데이터 생성을 실패하였습니다.
+개체 참조가 개체의 인스턴스로 설정되지 않았습니다.
+________________________________________________________________________________________________________________________________________________________
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ClassTest1
+{
+    class Program
+    {
+        static void Main (string[] args)
+        {
+            const int MAIN_MENU_INSERT = 1;
+            const int MAIN_MENU_VIEW = 2;
+            const int MAIN_MENU_ADD = 3;
+            const int MAIN_MENU_UPDATA = 4;
+            const int MAIN_MENU_DELETE = 5;
+            const int MAIN_MENU_EXIT = 6;
+
+            Random r = new Random();//랜덤 클래스 생성
+
+            string[] name = { "hong", "kim", "park", "cho", "han" };
+            int[] age = { 30, 40, 50, 60, 100 };
+            char[] gender = { '남', '여' };
+            string[] tel = { "010-222-3333", "010-223-39393", "393842899", "39393939", "49494939" };
+            string[] addr = { "서울", "대구 동구", "대구 북구", "부산", "울산" };
+            
+            Student[] st = null;
+            //List<Student> st = new List<Student>();
+          
+            while (true)
+            {
+                switch(menuMain())
+                {
+                    case MAIN_MENU_INSERT:
+                        int size = getRandSize();
+                     
+                        st = new Student[size];
+                        createRandData(st, name, age, gender, tel, addr, r);
+                        break;
+                    case MAIN_MENU_VIEW:
+                        try
+                        {
+                            if (st != null)
+                            {
+                                dataView2(st);
+                            }
+                        }catch(Exception e)
+                        {
+                            Console.WriteLine("데이터 생성 실패");
+                            Console.WriteLine(e.Message);
+                        }
+                        break;
+                    case MAIN_MENU_ADD:
+                        studentAdd();
+                        break;
+                    case MAIN_MENU_UPDATA:
+                        studentUpdata();
+                        break;
+                    case MAIN_MENU_DELETE:
+                        stuDelete();
+                        break;
+                    case MAIN_MENU_EXIT:
+                        Environment.Exit(0);
+                        break;
+                }
+                
+
+            }
+        }
+        public static int menuMain()
+        {
+            List<Student> stu = new List<Student>();
+            Console.WriteLine("------------------------------------------");
+            Console.WriteLine("학생 관리 프로그램 v1.0");
+            Console.WriteLine("------------------------------------------");
+            Console.WriteLine("1. 학생정보 생성");
+            Console.WriteLine("2. 학생정보 출력");
+            Console.WriteLine("3. 힉생정보 추가");
+            Console.WriteLine("4. 학생정보 수정");
+            Console.WriteLine("5. 학생정보 삭제");
+            Console.WriteLine("6. 종료");
+            Console.WriteLine("------------------------------------------");
+            Console.WriteLine("선택: ");
+            int menu = Convert.ToInt32(Console.ReadLine());
+            return menu;
+        }
+        //랜덤 데이터 크기 설정
+        public static int getRandSize()
+        {
+            Console.WriteLine("------------------------------------------");
+            Console.WriteLine("램덤 데이터 생성 크기");
+            Console.WriteLine("------------------------------------------");
+            Console.WriteLine("크기 입력: ");
+            return Convert.ToInt32(Console.ReadLine());
+        }
+        //학생 랜덤 데이터 생성
+        public static void createRandData(Student[] st, string[] name, int[] age, char[]gender, string[] tel, string[] addr, Random r)
+        {
+            for (int i = 0; i < st.Length; i++)
+            {
+                st[i] = new Student(name[r.Next(5)], age[r.Next(5)], gender[r.Next(2)], tel[r.Next(5)], addr[r.Next(5)]);
+            }
+            Console.WriteLine("데이터가 정상적으로 생성되었습니다");
+        }
+        //출력 메소드
+        public static void dataView (Student[] s)
+        {
+            for(int i=0; i < s.Length; i++)
+            {
+                int count = 1;
+                try {
+                    Console.WriteLine("번호: "+count++);
+                    s[i].studentInfo(); 
+                }catch(NullReferenceException e)
+                {
+                    e.ToString();
+                    Console.WriteLine("데이터 생성을 실패하였습니다.");
+                    Console.WriteLine(e.Message);
+                }
+                
+            }
+        }
+        public static void dataView2(Student[] s)
+        {
+            int count = 1;
+            for (int i = 0; i < s.Length; i++)
+            {
+                Console.WriteLine("번호: " + count++);
+                s[i].studentInfo();    
+            }
+        }
+        public static void studentAdd()
+        {
+            
+        }
+        public static void studentUpdata()
+        {
+
+        }
+        public static void stuDelete()
+        {
+
+        }
+    }
+}
