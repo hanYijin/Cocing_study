@@ -1,0 +1,241 @@
+제네릭 이해
+
+class Apple{
+	public String toString(){return "사과";}
+}
+class Orange{
+	public String toString(){return "오렌지";}
+}
+public class Box {
+	Object obj;
+	
+	public Box(Object obj){
+		this.obj=obj;
+	}
+	public Object getObj(){
+		return obj;
+	}
+	public void setObj(Object obj){
+		this.obj=obj;
+	}
+	
+}
+
+
+public class BoxMana {
+	BoxMana(){
+		Box abox = new Box(new Apple());
+		Box bbox= new Box(new Orange());
+		
+		Apple a= (Apple)abox.getObj();
+		Orange b= (Orange)bbox.getObj(); // 형변환을 명시적으로 해줘야하는 문제점
+		
+		System.out.println(a);
+		System.out.println(b);
+		
+	}
+	public static void main(String[] args) {
+		new BoxMana();
+	}
+
+}
+
+사과
+오렌지
+
+class Apple{
+	public String toString(){return "사과";}
+}
+class Orange{
+	public String toString(){return "오렌지";}
+}
+public class Box <T> {
+	T obj;
+	
+	public Box(T obj){
+		this.obj=obj;
+	}
+	public T getObj(){
+		return obj;
+	}
+	public void setObj(T obj){
+		this.obj=obj;
+	}
+	
+}
+
+public class BoxMana {
+	BoxMana(){
+		//자료형을 정함
+		Box<Apple> abox = new Box<Apple>(new Apple());
+		Box<Orange> bbox= new Box<Orange>(new Orange());
+		
+		Apple a= abox.getObj();
+		Orange b= bbox.getObj();
+		
+//		Apple aa= bbox.getObj(); error 오류를 바로 확인 가능해진다.
+		
+		System.out.println(a);
+		System.out.println(b);
+		
+	}
+	public static void main(String[] args) {
+		new BoxMana();
+	}
+
+}
+사과
+오렌지
+
+
+
+//기본형 변수
+		int a=10;
+		int c =a;
+		//객체형 참조변수
+		Integer b= new Integer(10);
+		Integer d= b;
+		
+		a=20;
+		System.out.println("a= "+a);
+		System.out.println("c= "+c);
+		
+		b=20;
+		System.out.println("b= "+b);
+		System.out.println("d= "+d);
+
+
+__________________________________________________________________
+
+
+public class DBox<L,R> {
+	private L l;
+	private R r;
+	//생성자
+	public DBox(L l, R r){
+		super();
+		this.l=l;
+		this.r=r;
+		
+	}
+	@Override
+	public String toString(){
+		return "DBox [l="+l+", r="+r+"]";
+	}
+}
+public class DBoxMana {
+	public static void main(String[] args) {
+
+		DBox<String,Integer> dbox1 = new DBox<String,Integer>("a",25);
+		DBox<String,Integer> dbox2 =new DBox<String,Integer>("a",25);
+		
+		System.out.println(dbox1);
+		System.out.println(dbox2);	
+	}
+
+}
+
+DBox [l=a, r=25]
+DBox [l=a, r=25]
+
+______________________________________________________________________________________________________
+package com.mh;
+
+public class Ex01 {
+	public void doA() {
+		System.out.println("doA함수 입니다.");
+	}
+	public String reString() {
+		return "reString 반환";
+	}
+
+}
+
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<%@ page import="com.mh.Ex01" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+안녕하세용 jsp
+<%
+	Ex01 ex01= new Ex01();
+	ex01.doA();
+	String re = ex01.reString(); 
+	out.println(re);
+%>
+</body>
+</html>
+
+웹사이트 화면에는 안녕하세용 jsp reString 반환 
+콘솔창에는 doA함수 입니다.
+_____________________________________________________________________________________
+문제 21-1
+class DBox<L,R>{
+	private L left;
+	private R right;
+	public void set(L o, R r) {
+		left=o;
+		right=r;
+	}
+	public String toString() {return left +" & "+ right;}
+	public String printBox() {return left+"\n"+right;}
+}
+public class DDBox<U, D> {
+	private U u;
+	private D d;
+	public void set(U u, D d) {
+		this.u=u;
+		this.d=d;
+	}
+	public String toString() {return u+"\n"+ d;}
+	
+	public static void main(String[] args) {
+		DBox<String, Integer> box1= new DBox<>();
+		box1.set("Apple",25);
+		DBox<String, Integer> box2= new DBox<>();
+		box2.set("Orange",33);
+		
+		DBox<DBox<String,Integer>,DBox<String, Integer>> dbox= new DBox<>();
+		dbox.set(box1,box2);
+		String doublebox= dbox.printBox();
+		System.out.println(doublebox);
+		
+	}
+}
+Apple & 25
+Orange & 33
+____________________________________________________________________________________________________________
+public class Box <T> {
+
+	T obj;
+	public Box(T obj){
+		this.obj=obj;
+	}
+
+	public T getObj(){
+		return obj;
+	}
+	public void setObj(T obj){
+		this.obj=obj;
+	}
+
+
+	public static void main(String[] args) {
+		Box<String> apple = new Box<String>("사과");
+		Box<String> banana = new Box<String>("바나나");
+		String a= apple.getObj();
+		String b = banana.getObj();
+		
+		System.out.println(a);
+		System.out.println(b);
+		System.out.println(apple.getObj());
+		System.out.println(banana.getObj());
+		
+		
+	}
+}
