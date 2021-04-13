@@ -1,0 +1,250 @@
+첫화면
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	.container{
+		width : 800px;
+		height: 500px;
+		margin: 0 auto;
+		background-color: #C9D9D2;
+		padding: 200px 160px;
+		box-sizing: border-box;
+		}
+	#idsearch,#login,#signin,#outroom{
+		color:#205864;
+		background-color:#F6EFD9;
+		margin-top: 10px;
+		padding: 5px 10px;
+	}
+	
+</style>
+<script type="text/javascript">
+	window.onload=function(){
+		document.getElementById('idsearch').onclick=function(){
+			location.href='idsearch.jsp'; //idsearch.jsp 페이지로 이동
+		}
+		document.getElementById('login').onclick=function(){
+			var id= document.getElementById('id');//입력받은 아이디 변수 저장
+			var pw= document.getElementById('pw');//입력받은 비밀번호 변수 저장
+			alert('id= '+id.value);
+			alert('pw= '+pw.value);
+			location.href='login.jsp?id='+id.value+'&pw='+pw.value;
+//		location.href='login.jsp'; //login.jsp 페이지로 이동
+			
+		}
+		document.getElementById('signin').onclick=function(){
+			location.href='signin.jsp'; //signin.jsp 페이지로 이동
+		}
+		document.getElementById('outroom').onclick=function(){
+			location.href='outroom.jsp'; //outroom.jsp 페이지로 이동
+		}
+	}
+</script>
+</head>
+<body>
+	<div class="container">
+		<table>
+		<tr>
+			<td>아이디</td>
+			<td><input type="text" name="id" id="id"/></td>
+			<td>비밀번호</td>
+			<td><input type="text" name="pw" id="pw"/></td>
+		</tr>
+		<tr>
+			<td><input type="button" value="ID찾기" id="idsearch"></td>
+			<td><input type="button" value="로그인" id="login"></td>
+			<td><input type="button" value="회원가입" id="signin"></td>
+			<td><input type="button" value="퇴실" id="outroom"></td>
+		</tr>
+		</table>
+	</div>
+</body>
+</html>
+___________________________________________________________________________________________________________
+회원가입
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	.container{
+		width : 800px;
+		height: 500px;
+		margin: 0 auto;
+		background-color: #C9D9D2;
+		padding: 150px 250px;
+		color: #205864;
+		box-sizing: border-box;
+		}
+		#sub{
+			padding : 2px 100px;
+		}	
+		
+</style>
+</head>
+<body>
+<div class="container">
+	<form action="signproc.jsp" method="get"> <!--"get" 주소줄에 뭘 가져갔는 지보이는 방식 "post"는 주소줄에 보이지 않음  -->
+		<table>
+			<tr>
+				<td>아이디</td>
+				<td><input type="text" name ="id"/></td>
+			</tr>
+			<tr>
+				<td>비밀번호</td>
+				<td><input type="text" name ="pw"/></td>
+			</tr>
+			<tr>
+				<td>이름</td>
+				<td><input type="text" name ="name"/></td>
+			</tr>
+			<tr>
+				<td>전화번호</td>
+				<td><input type="text" name ="phone"/></td>
+			</tr>
+		</table>
+		<input type="submit" value="회원가입" id="sub"/>
+	</form>
+
+</div>
+</body>
+</html>
+
+http://localhost:9000/sproj/signproc.jsp?id=%E3%85%87&pw=%E3%85%87&name=gks&phone=%E3%85%87
+_-------------------------------------------------------------------------------------------------------
+<%@page import="java.sql.PreparedStatement"%> 
+<%@page import="java.sql.Connection"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+ 	out.println(123);
+ 	out.println("<p>문자문단</p>");
+ 	for(int i=0; i<10;i++){
+ 		out.println("i = "+ i);
+ 	}
+ 	out.println("<br>"); // 줄띄움
+ 	String p_id= (String)request.getParameter("id"); //(주소줄에 가져온 속성 가져와서 문자열에 넣기) 입력된 아이디 문자열 저장
+ 	String p_pw= (String)request.getParameter("pw"); //비밀번호
+ 	String p_name= (String)request.getParameter("name");//이름
+ 	String p_phone= (String)request.getParameter("phone");//전화번호
+ 	out.println(" p_id = "+ p_id);
+ 	out.println("<br>");
+ 	out.println("p_pw = "+p_pw);
+ 	out.println("<br>");
+ 	out.println("p_name= "+p_name);
+ 	out.println("<br>");
+ 	out.println("p_phone = "+p_phone);
+ 	out.println("<br>");
+ 	//데이터베이스 연결
+ 	Connection conn= null;
+ 	PreparedStatement pstmt= null;
+ 	
+%>
+
+
+-----------------------------------------------
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@page import="java.sql.DriverManager"%>
+<%@ page import="java.sql.PreparedStatement"%>
+<%@ page import="java.sql.Connection"%>
+<%
+	out.println(123);
+	out.println("<p>문단문단</p>");
+	for(int i =0; i<10;i++){
+		out.println("i = "+i);
+	}
+	String p_id = (String)request.getParameter("id");
+	String p_pw = (String)request.getParameter("pw");
+	String p_name = (String)request.getParameter("name");
+	String p_phone = (String)request.getParameter("phone");
+	
+	out.println("<br>");
+	out.println("p_id = "+ p_id);
+	out.println("<br>");
+	out.println("p_pw = "+ p_pw);
+	out.println("<br>");
+	out.println("p_name = "+ p_name);
+	out.println("<br>");
+	out.println("p_phone = "+ p_phone);
+	
+	Connection conn = null;
+	PreparedStatement pstmt = null;
+	try{
+		// ojdbc jar 추가 확인
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+
+		conn = 
+		DriverManager.getConnection
+		("jdbc:oracle:thin:@localhost:1521:xe", "AI", "1234");
+		
+		// 블럭 지정 후 ctrl+ shift + x 대문자 지정
+		// 블럭 지정 후 ctrl+ shift + y 소문자 지정
+		pstmt = conn.prepareStatement(
+				"INSERT INTO "+ 
+				"SPRO_MEMBER "+
+				"VALUES "+
+				"(SPROMEMBER.NEXTVAL,'BB','BB','BB','BB')");
+		int ret = pstmt.executeUpdate();
+		if(ret > 0 )
+			System.out.println("정상적으로 insert됨");
+	}
+	catch(Exception e){
+		e.printStackTrace();
+	}
+	finally{
+		try{
+			if(pstmt != null) pstmt.close();
+			if(conn != null) conn.close();
+		}catch(Exception ex){
+			
+		}
+	}
+	
+%>
+
+
+
+___________________________________________________________________
+로그인 
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<%
+	String id=request.getParameter("id");//
+	String pw=request.getParameter("pw");
+	out.println("id= "+id);
+	out.println("pw= "+pw);
+%>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

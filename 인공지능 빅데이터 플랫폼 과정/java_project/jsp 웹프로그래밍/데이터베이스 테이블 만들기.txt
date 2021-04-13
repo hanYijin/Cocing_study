@@ -1,0 +1,16 @@
+INSERT INTO "AI"."SPRO_MEMBER" (IDX, ID, PW, NAME, PHONE) VALUES ('1', 'aa', 'aa', 'aa', 'aa')
+--시퀀스(순서) 만들기
+CREATE SEQUENCE spromember
+INCREMENT By 1 MAXVALUE 5000;
+--Sequence SPROMEMBER이(가) 생성되었습니다.
+--
+--한개 순서 증가 시켜라.
+select spromember.nextval from dual;
+--지금 순서 번호 조회해라.
+select spromember.currval from dual;
+-- 값입력
+INSERT INTO spro_member values (2,'bb','bb','bb','bb');
+
+select * from spro_member;
+
+"INSERT INTO"+ "SPRO_MEMBER"+ "VALUES"+ "(SPROMEBER.NEXTVAL,'BB','BB','BB','BB');
