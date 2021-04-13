@@ -128,7 +128,7 @@ namespace ClassTest1
         {
         }
 
-        public Car(string model, string color, string company, string price)//매배변수를 갖는 생성자 오버라이딩 한것이다
+        public Car(string model, string color, string company, string price)//매배변수를 갖는 생성자 오버로딩 한것이다
         {
             this.model = model;
             this.color = color;
@@ -285,7 +285,7 @@ namespace ClassTest1
         public Student()
         {
         }
-        //매개변수 받는 생성자
+        //매개변수 받는 생성자 =>오버로딩
         public Student(string name, int age, char gender, string tel, string addr)
         {
             this.name = name;
