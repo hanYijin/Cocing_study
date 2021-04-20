@@ -1,0 +1,107 @@
+1. [전산]  매개변수, 인수, 파라미터 (Argument,Parameter) 이란?
+
+  ㅇ 각 프로그램 모듈/부프로그램/함수/프로시저 간에 데이터를 넘겨주는데 쓰이는 언어 구성자
+     - `파라미터/매개변수(Parameter)`,`아큐먼트(Argument)/인수(引數)/인자` 라고도 함
+
+
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+<%
+	/*
+	파라메타 전송방법
+	1. form 태그로 감싸서 보내는 방식
+	2. 주소에 parameterProc.jsp?a=10&b=20
+		특징.. 다음 페이지에서 변수로 작동
+	*/
+%>
+<!-- form 태그로 감싸서 파라메터 보내기 -->
+<form action="parameterProc.jsp"> // 
+	a=<input type="text" name="a"/>
+	b=<input type="text" name="b"/> 
+	<input type="submit" value="확인"/>  입력한 값이 parameter로 parameterProc.jsp로 값을 가지고 이동
+</form> 
+</body>
+</html>
+
+parameterProc.jsp
+<body>
+<%
+	String a= request.getParameter("a");
+	String b= request.getParameter("b");
+	
+	out.println("a= "+a);
+	out.println("b= "+b);
+
+	String c= request.getParameter("c");
+	out.println("c= "+c); //파라미터로 전달되지 않으므로 null값을 가짐
+%>
+</body>
+
+a= 10 b= 20 c= null 
+-----------------------------------------------------------------------------------------
+<body>
+<%
+	/*
+	파라메타 전송방법
+	1. form 태그로 감싸서 보내는 방식
+	2. 주소에 parameterProc.jsp?a=10&b=20
+		특징.. 다음 페이지에서 변수로 작동
+	*/
+%>
+
+<!-- 주소로 파라메터 보내기 -->
+<a href="parameterProc.jsp?a=10">a값 보내기 </a>
+</body>
+
+parameterProc.jsp
+<body>
+<%
+	String a= request.getParameter("a");
+	String b= request.getParameter("b");
+	
+	out.println("a= "+a);
+	out.println("b= "+b);
+
+	String c= request.getParameter("c");
+	out.println("c= "+c); //파라미터로 전달되지 않으므로 null값을 가짐
+%>
+</body>
+a= 10 b= null c= null 
+__________________________________________________________________________________________
+세션
+
+<body>
+<%
+	session.setAttribute("a",10);
+	session.setAttribute("id", "gksdlwls");
+	session.setAttribute("b","ggggg");
+%>
+</body>
+
+<body>
+<%
+	Integer se_a= (Integer)session.getAttribute("a");
+	String se_id= (String)session.getAttribute("id");
+	String se_b= (String)session.getAttribute("b");
+	
+	out.println("se_a= "+ se_a);
+	out.println("se_id= "+ se_id);
+	out.println("se-b= "+se_b);
+%>
+</body>
+
+se_a= 10 se_id= gksdlwls se-b= ggggg 
+- 세션으로 전송방법
+		특징: 브라우저가 닫기기 전까지 변수로 작동
+		sesion 객체를 사용
+		setAttribute("이름","값") // 설정함수
+		getAttribute("이름") //가져올때 사용하는 함수
+		
+		세션 값을 지우기 session.invalidate() // 세션에 내용 삭제
