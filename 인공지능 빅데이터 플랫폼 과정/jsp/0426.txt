@@ -1,0 +1,159 @@
+<script type="text/javascript">
+	$('document').ready(function(){
+		$('button').on('click',function(obj){
+			alert('this= '+ this);
+			alert('obj= '+obj);
+		});
+	})
+</script>
+---------------------------------------------------------------------------------------
+this= [object HTMLButtonElement]
+obj= [object Object]
+
+<script type="text/javascript">
+	$('document').ready(function(){
+		$('button').on('click',function(obj){
+			
+			$(this).attr('class','btn-danger w80');
+			//this: click한 button
+			//class와 tag는 중복이 가능, id는 오직 하나
+			alert('$(this).html()= '+$(this).html())
+			alert('$(this).text()= '+$(this).text())
+			
+		});
+	})
+</script>
+$(this).html()=  3 
+$(this).text()=  3 
+---------------------------------------------------------------------------------------------
+//text() 태그사이에 글자만 가져오기
+//html() 태그사이에 html 태그 포함해서 글자 가져오기
+//val() input 태그에 있는 value 값 가져오기
+
+//jQuery 문법
+	$('document').ready(function(){
+		//css 
+		/* 	1) #id-> id 선택자
+			2) .class -> class 선택자
+			3) tage 명 -> tage 선택자
+			$('#id명')
+			$('.class명')
+			$('h1')
+		<p><h1>제목</h1><strong>진하게</strong><h2>h2h2</h2></p>
+			p > h1 {}	부모 태그 > 자식 태그 	
+			p > h2 {}
+			$('p > h2').attr('class','class명')
+		*/
+
+----------------------------------------------------------------------------------------------------
+$('#confirm').on('click',function(){
+			//좌석이 빨간색인거 찾아서 seatsave.jsp
+			$('button').each(function(index,obj){
+				console.log("index= "+index);
+				console.log("obj= "+obj);
+				console.log("this= "+this);
+				
+			})
+			//location.href="seatsave.jsp?seat=";
+		})
+
+
+index= 0
+seatsel.jsp:45 obj= [object HTMLButtonElement]
+seatsel.jsp:46 this= [object HTMLButtonElement]
+seatsel.jsp:44 index= 1
+seatsel.jsp:45 obj= [object HTMLButtonElement]
+seatsel.jsp:46 this= [object HTMLButtonElement]
+seatsel.jsp:44 index= 2
+seatsel.jsp:45 obj= [object HTMLButtonElement]
+seatsel.jsp:46 this= [object HTMLButtonElement]
+seatsel.jsp:44 index= 3
+seatsel.jsp:45 obj= [object HTMLButtonElement]
+seatsel.jsp:46 this= [object HTMLButtonElement]
+seatsel.jsp:44 index= 4
+seatsel.jsp:45 obj= [object HTMLButtonElement]
+seatsel.jsp:46 this= [object HTMLButtonElement]
+...
+
+
+-------------------------------------------------------------------------------------------------
+$('#confirm').on('click',function(){
+			//좌석이 빨간색인거 찾아서 seatsave.jsp
+			$('button').each(function(index,obj){
+
+				console.log("$(this).attr('class')= "+$(this).attr('class'));
+			})
+$(this).attr('class')= btn btn-primary w80
+$(this).attr('class')= btn btn-danger w80
+$(this).attr('class')= btn btn-primary w80
+
+----------------------------------------------------------------------------------------------------
+$('#confirm').on('click',function(){
+			//좌석이 빨간색인거 찾아서 seatsave.jsp
+			$('button').each(function(index,obj){
+				console.log("$(this).attr('class')= "+$(this).attr('class'));
+				if($(this).attr('class')== 'btn btn-danger w80'){
+					console.log("$(this).attr('class')= "+$(this).attr('class'));
+					console.log("$(this).text()= "+$(this).text());
+				}
+			})
+			//location.href="seatsave.jsp?seat=";
+		})
+$(this).attr('class')= btn btn-danger w80
+seatsel.jsp:50 $(this).text()=  3 
+
+----------------------------------------------------------------------------------------------------------
+<script type="text/javascript">
+//jQuery 문법
+	$('document').ready(function(){
+		$('button').on('click',function(obj){
+			$('button').attr('class','btn btn-primary w80'); 
+			$(this).attr('class','btn btn-danger w80');
+		});
+		$('#confirm').on('click',function(){
+			var seat='';
+			$('button').each(function(index,obj){
+				console.log("$(this).attr('class')= "+$(this).attr('class'));
+				if($(this).attr('class')== 'btn btn-danger w80'){
+					seat= $(this).text();
+				}
+			})
+			location.href="seatsave.jsp?seat="+seat;
+		})
+	})
+</script>
+http://localhost:9000/sproj/seatsave.jsp?seat=%203
+
+
+1. mysql 설치
+	1) sqlserver(ms-sql)
+
+	2) mysql-server
+		mysql-server
+	mysql-client
+		workbench, java, c#, node.js, python
+
+	3) oracle-server 윈도우 서비스
+		c:\oracle\product\
+
+	4) oracle-client
+		sql-developer, java, c#, node.js, python
+
+
+CREATE TABLE `spro`.`member` (
+  `idx` INT NOT NULL auto_increment,
+  `id` VARCHAR(45) NULL,
+  `pw` VARCHAR(45) NULL,
+  `name` VARCHAR(45) NULL,
+  `phone` VARCHAR(45) NULL,
+  PRIMARY KEY (`idx`));
+
+use spro;
+select * from member;
+
+insert into member
+(id,pw,name,phone)
+values('aa','aa','aa','02030303')
+
+
+2.구름IDE
