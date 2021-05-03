@@ -1,0 +1,118 @@
+main.py
+
+from csvRW import doRead,doWrite
+
+def print_hi(name):
+    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+def doA():
+    print("doA 함수 시작")
+    for i in range(0,10):
+        print("i= ",i)
+    print("doA 함수 끝")
+
+if __name__ == '__main__':
+    # print_hi('PyCharm')
+    # doA()
+    # doRead()
+    doWrite()
+
+
+-----------------------------------------------------------------------------
+csvPw.py
+
+import csv
+
+def doRead():
+    print("read 시작")
+
+def doWrite():
+    file= open("a.csv","w",newline='')
+    wr= csv.writer(file)
+    wr.writerow(['1','test','aaa'])
+    wr.writerow(['2','test','bbb'])
+    wr.writerow(['3','test','ccc'])
+
+    file.close()
+
+
+doWrite()
+------------------------------------------------------------------------------
+import csv
+
+def doRead():
+    file=open("a.csv","r")  #파일 열기
+    rd= csv.reader(file)    #읽는 버퍼 가져오기
+    for line in rd:         #한 줄씩 꺼내면서 line에 넣기
+        print(line)         #line 출력
+    file.close()            #파일 닫기
+
+def doWrite():
+    file= open("a.csv","w",newline='')
+    wr= csv.writer(file)
+    wr.writerow(['1','test','aaa'])
+    wr.writerow(['2','test','bbb'])
+    wr.writerow(['3','test','ccc'])
+
+    file.close()
+________________________________________________________________________________
+mysqlrw.py
+
+import pymysql
+#pip install pymysql 라이브러리 설치
+
+def selectMember():
+    conn = pymysql.connect(host='localhost', user='root', password='1234',db='spro',charset='utf8')
+
+    try:
+        sql = 'select * from member'
+        cursor = conn.cursor()
+        cursor.execute(sql)
+        result = cursor.fetchall()
+        #print(result)
+        for row in result:
+            print(row[1],row[2],row[3])
+    except:
+        pass
+
+    finally:
+        conn.close()
+
+
+def insertMember():
+    conn = pymysql.connect(host='localhost', user='root', password='1234', db='spro', charset='utf8')
+
+    try:
+        sql = 'insert into member (id,pw,name,phone) values (%s,%s,%s,%s)'
+        cursor = conn.cursor()
+        cursor.execute(sql,('cc','cc','cc','cc'))
+        cursor.execute(sql, ('dd', 'dd', 'dd', 'dd'))
+        conn.commit()
+    except:
+        pass
+
+    finally:
+        conn.close()
+
+----------------------------------------------------------------------------------------------------------
+main.py
+
+from csvRW import doRead,doWrite
+from myaqlrw import selectMember, insertMember
+
+if __name__ == '__main__':
+    doWrite()
+    doRead()
+    # ctrl + alt + shift +l 자동정렬
+    selectMember()
+    insertMember()
+
+
+aa aa aa
+bb bb bb
+한글 한글 한글
+cc cc cc
+han han han
+hhh hhh han
+cc cc cc
+dd dd dd
+_______________________________________________________________________________________________________________________
