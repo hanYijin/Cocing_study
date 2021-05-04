@@ -1,0 +1,116 @@
+https://programmers.co.kr/learn/courses/17/lessons/805
+
+ArrayList- JAVA API: java에서 가장 많이 사용되는 Data Structure(자료구조)
+
+1. 생성
+ArrayList 개체를 생성해야 사용가능
+ArrayList<Integer> numbers= new ArrayList<>(); 
+// Interger: 정수형 클래스, <제네릭>정의를 통해 사용자 저의 클래스(사용자 정의 자료형)가 올 수 있다
+
+import java.util.ArrayList; 
+
+2. 추가 element 요소를 추가할 때는 add메소드를 사용
+add는 단순히 배열 뒤에 데이터를 더하기 때문에 데이터 처리 속도가 빠름
+
+numbers.add(10);
+numbers.add(20);
+numbers.add(1,50); //add(인덱스, 값) 해당 인덱스 요소의 값을 변경
+
+3. 삭제 : 특정 인덱스에 위치한 요소를 삭제
+number.remove(2);
+
+4. 가져오기: 특정한 인덱스에 위치한 요소를 가져올 때는 get을 사용
+number.get(2);
+
+for(int value: numbers){
+	System.out.println(value);
+}
+
+5. size()
+number.size(); 배열의 길이를(메모리 크기) 반환
+
+package sproj.com.org;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
+/*
+ * mysql 데이터베이스와 연결해서
+ * seatuse
+ * select insert update delete 함수 구현
+ */
+public class SPRO_SeatDBManager implements DBInfo {
+	
+	public ArrayList<SPRO_seatUse> select() {
+		Connection conn = null; //DB 연결 객체 변수
+		PreparedStatement pstmt=null; // SQL 만드는 객체 변수
+		ResultSet rs =null; //sql문 실행하고 반환값 담는 객체 변수
+		SPRO_seatUse seat =null;
+		ArrayList<SPRO_seatUse> list = new ArrayList<SPRO_seatUse>();
+		list.add(new SPRO_seatUse());
+		try {
+			Class.forName(DBInfo.mysql_class);
+			conn=DriverManager.getConnection(DBInfo.mysql_url,DBInfo.mysql_id,DBInfo.mysql_pw);
+			pstmt=conn.prepareStatement("Select*from seat_use");
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				System.out.println("111");
+//				seat.setNum(num);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(conn!=null)conn.close();
+				if(pstmt!=null)pstmt.close();
+			}catch(Exception c) {
+				
+			}
+		}return list;
+	}
+
+}
+
+
+<%
+	SPRO_SeatDBManager ssdm= new SPRO_SeatDBManager();
+	ArrayList<SPRO_seatUse> list= ssdm.select();
+	out.print("list.size()= "+list.size());
+	SPRO_seatUse ssu= list.get(0);
+	System.out.println("ssu.getM_time()="+ssu.getM_time());
+	System.out.println("ssu.getName()="+ssu.getName());
+	System.out.println("ssu.getPhone()="+ssu.getPhone());
+	System.out.println("ssu.getNum()="+ssu.getNum());
+%>
+
+ssu.getM_time()=0
+ssu.getName()=null
+ssu.getPhone()=null
+ssu.getNum()=0
+
+
+SPRO_seatUse ssu= list.get(0);
+	out.println("ssu.getM_time()="+ssu.getM_time()+"<b>");
+	out.println("ssu.getName()="+ssu.getName());
+	out.println("ssu.getPhone()="+ssu.getPhone());
+	out.println("ssu.getNum()="+ssu.getNum());
+	
+	ssu= list.get(1);
+	out.println("ssu.getM_time()="+ssu.getM_time());
+	out.println("ssu.getName()="+ssu.getName());
+	out.println("ssu.getPhone()="+ssu.getPhone());
+	out.println("ssu.getNum()="+ssu.getNum());
+
+
+for(int i=0; i<list.size();i++){
+		SPRO_seatUse ssu= list.get(i);
+		out.println("ssu.getM_time()="+ssu.getM_time()+"<br>");
+		out.println("ssu.getName()="+ssu.getName()+"<br>");
+		out.println("ssu.getPhone()="+ssu.getPhone()+"<br>");
+		out.println("ssu.getNum()="+ssu.getNum()+"<br>");
+	}
