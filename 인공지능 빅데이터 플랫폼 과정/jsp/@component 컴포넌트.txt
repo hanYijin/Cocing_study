@@ -1,0 +1,253 @@
+1. Annotation 객체 생성
+package yj0525.beans;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class AA {
+	public void doA() {
+		System.out.println("doA함수");
+	}
+	public void doB() {
+		System.out.println("doB");
+	}
+
+}
+
+package yj0525.beans;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class BB {
+	public void doB() {
+		System.out.println("doB함수");
+	}
+	public void doBB() {
+		System.out.println("doBB함수");
+	}
+
+}
+
+
+
+
+
+
+package yj0525.conf;
+
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@ComponentScan(basePackages = {"yj0525.beans"})//yj0525.beans 패키지의 클래스(beans, 컴포넌트)를 불러온다 
+public class Appctx {
+
+}
+
+package yj0525.main;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import yj0525.beans.AA;
+import yj0525.beans.BB;
+import yj0525.conf.Appctx;
+
+public class YJMain {
+	public static void main(String[] args) {
+		AnnotationConfigApplicationContext acac= new AnnotationConfigApplicationContext(Appctx.class);
+		
+		AA aa1= acac.getBean(AA.class);
+		aa1.doA();
+		aa1.doB();
+		
+		AA aa2= acac.getBean(AA.class);
+		System.out.println(aa1); // 싱글톤 같은 주소를 출력
+		System.out.println(aa2);
+		
+		BB bb = acac.getBean(BB.class);
+		bb.doB();
+		bb.doBB();
+	}
+
+}
+
+doA함수
+doB
+yj0525.beans.AA@58c1c010
+yj0525.beans.AA@58c1c010
+doB함수
+doBB함수
+
+
+package yj0525.main;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import yj0525.beans.AA;
+import yj0525.beans.BB;
+import yj0525.conf.Appctx;
+
+
+package yj0525.beans;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class AA {
+	public int a= 10;
+	public void doA() {
+		System.out.println("doA함수");
+	}
+	public void doB() {
+		System.out.println("doB");
+	}
+
+}
+
+public class YJMain {
+	public static void main(String[] args) {
+		AnnotationConfigApplicationContext acac= new AnnotationConfigApplicationContext(Appctx.class);
+		
+		AA aa1= acac.getBean(AA.class);
+		aa1.doA();
+		aa1.doB();
+		
+		AA aa2= acac.getBean(AA.class);
+		System.out.println(aa1); // 싱글톤 같은 주소를 출력
+		System.out.println(aa2);
+		
+		System.out.println("aa1.a = "+aa1.a);// 싱글톤 같은 주소를 출력
+		aa1.a=20;
+		System.out.println("aa2.a= " +aa2.a);
+		
+		BB bb = acac.getBean(BB.class);
+		bb.doB();
+		bb.doBB();
+	}
+
+}
+doA함수
+doB
+yj0525.beans.AA@58c1c010
+yj0525.beans.AA@58c1c010
+aa1.a = 10
+aa2.a= 20
+doB함수
+doBB함수
+
+package yj0525.beans;
+
+import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Component;
+//@Component
+public class UseAABB {
+	@Autowired
+	AA aa;
+	
+	@Autowired
+	BB bb;
+	
+	public void doAABB() {
+		aa.doA();
+		aa.doB();
+		bb.doB();
+		bb.doBB();
+	}
+
+}
+
+package yj0525.conf;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+import yj0525.beans.UseAABB;
+
+@Configuration
+@ComponentScan(basePackages = {"yj0525.beans"})//yj0525.beans 패키지의 클래스(beans, 컴포넌트)를 불러온다 
+public class Appctx {
+	@Bean
+	public UseAABB useAABB() {
+		return new UseAABB();
+	}
+	
+
+}
+
+package yj0525.main;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import yj0525.beans.UseAABB;
+import yj0525.conf.Appctx;
+
+public class YjMainAuto {
+	public static void main(String[] args) {
+		AnnotationConfigApplicationContext acac= new AnnotationConfigApplicationContext(Appctx.class);
+		
+		UseAABB uab = acac.getBean(UseAABB.class);
+		uab.doAABB();
+	}
+
+}
+
+2. GenericXmlApplicationContext 객체 생성
+
+new> spring > Spring Bean Configuration File > beans와 context를 체크
+
+appctx.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	<!-- 어노테이션 설정된거 사용 -->
+	<context:annotation-config></context:annotation-config>
+	<!-- 객체 등록할 때 패키지명 지정 -->
+	<context:component-scan base-package="yj0525.beans"></context:component-scan>
+	
+</beans>
+
+UseAABB.java
+
+package yj0525.beans;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+//import org.springframework.stereotype.Component;
+@Component
+public class UseAABB {
+	@Autowired
+	AA aa;
+	
+	@Autowired
+	BB bb;
+	
+	public void doAABB() {
+		aa.doA();
+		aa.doB();
+		bb.doB();
+		bb.doBB();
+	}
+
+}
+
+MainXml.java
+
+package yj0525.main;
+
+import org.springframework.context.support.GenericXmlApplicationContext;
+
+import yj0525.beans.UseAABB;
+
+public class YjMainXML {
+	public static void main(String[] args) {
+		GenericXmlApplicationContext gxac = new GenericXmlApplicationContext("appctx.xml");
+		
+		UseAABB uab = gxac.getBean(UseAABB.class);
+		uab.doAABB();
+	}
+}
