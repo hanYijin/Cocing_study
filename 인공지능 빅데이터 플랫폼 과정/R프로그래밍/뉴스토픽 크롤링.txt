@@ -38,10 +38,29 @@ newsData2 <- read.csv("res/daum0527_news.csv", header = T, stringsAsFactors = F)
 newsData2
 
 #칼러명 변경
-names(newsData2) <- c("num","content")
-newsText <-newsData2$content
+names(newsData2) <- c("num","title")
+str(newsData2)
+newsTitle <-newsData2$title
+newsTitle
 
 exNouns <- function(x){ paste(extractNoun(x), collapse = " ")}
 newsNouns <- sapply(newsTitle, exNouns)
 newsNouns
-newsText
+
+library(tm)
+# 말뭉치 생성
+newCorpus <- Corpus(VectorSource(newsNouns))
+inspect(newCorpus)
+
+tdm <- TermDocumentMatrix(newCorpus, control = list(wordLengths=c(4,16)))
+tdm
+
+tdmDf<-as.data.frame(as.matrix(tdm))
+wordResult <- sort(rowSums(tdmDf), decreasing = T)
+head(wordResult)
+
+myNames <- names(wordResult)
+wordDF <- data.frame(word=myNames, freq=wordResult)
+library(wordcloud2)
+wordcloud2(wordDF, fontFamily = "맑은 고딕", size=1.0, color="random-light",
+           backgroundColor="black", shape="diamond")
