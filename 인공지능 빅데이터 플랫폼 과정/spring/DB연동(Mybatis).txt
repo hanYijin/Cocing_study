@@ -1,0 +1,105 @@
+스프링, Mybatis, MySQL 연동 
+설정 방법
+
+Mybatis는 자바에서 제공하는 Jdbc를 보다 편리하게 사용할 수 있도록 해주는 프레임워크이다
+- sql 퀴리문을 코드 내에 쓰지 랂고 Mapper 파일에서 관리함으로써 코드와  sql쿼리를 분리
+- 코드를 간소화하여 가시성을 높여줌
+
+1. Maven "pom.xml"에 DB연동에 필요한 라이브러리 의존 설정 추가
+- MySQL Connector: MySQL 연결에 필요한 JDBC 드라이버를 제공
+- Mybatis
+- Mybatis-spring : 스프링에서 Mybatis 연동을 위한 모듈
+- spring-jbdc : 기본 자바 jdbc가 아닌 스프링의 jdbc, jdbc Template 등 JDBC 연동에 필요한 기능을 제공
+- common-dbcp2 : 톰갯에서 커넥션풀을 이용할 수 있도록 아파치에서 제공해주는 라이브러리
+- spring- test: 스프링에 Mybatis가 정상적으로 연동되었는지 확인 용도
+
+2. "BasicDataSource" 클래스의 빈(Bean) 객체 의존 설정 (컨넥션풀 사용)
+#컨넥션풀: 일정 개수의 DB컨넥션을 미리 만들어두는 기법
+최초연결에 다른 응답속도 저하와 동시 접속사가 많을 때 발생하는 부하를 줄이기 위해 사용하는 것
+DB 컨텍션 풀 기능을 제공하는 모듈로는 Tomcat JDBC, HikariCP DBCP 등이 존재함.
+
+# BasicDataSource  클래스는 아파치에서 제공해주는 클래스로 커넥션풀을 사용하도록 해줌
+# spring  컨테이너
+- 루트 컨테이너 ( root-context.xml ): 웹과 관련 없는 자원을 빈(Bean)으로 관리해주는 용도로 사용
+다른 컨테이너를 이용햐도 되지만 루트 컨테이너에서 DB를 관리하는 것이 일반적
+어플리케이션 싱글톤의 DataSource 객체 빈으로 생성
+
+- 서블릿용 컨테이너 ( servlet-context.xml ) : 핸드러, 컨트롤러등
+
+<beans:bean id="ds" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+	<beans:property name="driverClassName" value="com.mysql.jdbc.Driver"></beans:property>
+	<beans:property name="url" value="jdbc:mysql://localhost:3306/mybatis"></beans:property>
+	<beans:property name="username" value="root"></beans:property>
+	<beans:property name="password" value="1234"></beans:property>
+</beans:bean>
+
+DriverClassName의 값으로 넣어주는 "mysql.jdbc" 라이브러리는 "pom.xml"에서 의존설정 해주었기 때문에 자동으로 받아줌
+
+@Controller
+public class BoardController {
+	//생성된 빈(Bean)을 자동으로 주입
+//특정 Bean 객체를 강제로 지정해주는 어노테이션만 @Qualifier를 사용해주면 됩니다.
+//ex) @Qualifier("BoardSevice")
+//만약 찾는 Bean 객체가 없을 경우 발생하는 예외를 피하고 싶다면 required 속성값을 false로 줍니다.
+//@Autowired(required=false)
+
+	@Autowired
+	BoardService bs;
+
+	// "/freeboard" url에 대한 요청처리
+	@RequestMapping(value = "/freeboard", method = RequestMethod.GET)
+	public String freeboard(Model model) {
+		
+		System.out.println("게시판 홈");
+	//	bs.select();
+		
+		return "freeboard/freeboard";
+	}
+
+//	@RequestMapping(value = "/freeboard/insert", method = RequestMethod.GET)
+//	public String freeboardinsert(Model model,HttpServletRequest request) {
+//		String name= request.getParameter("name");
+//		System.out.println("name= "+ name);
+//		bs.insert();
+//		
+//		return "freeboard/freeboard";
+//	}
+	@RequestMapping(value = "/freeboard/insert", method = RequestMethod.GET)
+	public String freeboardinsert(Model model, String name, Board board) {
+		
+		System.out.println("name= "+ name);
+		bs.insert(board);
+		System.out.println(board);
+		return "freeboard/freeboard";
+}
+	@RequestMapping(value = "/freeboard/insertform", method = RequestMethod.GET)
+	public String freeboardinsertform(Model model) {
+		
+		System.out.println("게시판 글쓰기");
+		//bs.insert();
+		
+		return "freeboard/freeboardinsert";
+	}
+	
+
+}
+
+<Mybatis 설정>
+SQL 쿼리문을 관리할 매퍼 파일 생성
+
+1) src/main/resources 폴더 내에 mapper 파일을 생성
+freeboard_SQL.xml
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="freeboard">
+	<insert id="insert" parameterType="com.org.mbat.freeboard.Board">
+		INSERT INTO freeboard
+		(TITLE, PASS, CONTENT, WDATE, NAME, EMAIL)
+		VALUES (#{title},'1234',#{content}, now(),#{name},#{email});
+	</insert>
+	<select id="select">
+		SELECT * FROM FREEBOARD
+	</select>
+</mapper>
